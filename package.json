@@ -1,0 +1,28 @@
+{
+  "name": "resource-hub-server",
+  "version": "0.1.0",
+  "description": "An MCP server to connect to the resource hub",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "resource-hub-server": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "client": "node build/client.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "eventsource": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+}
