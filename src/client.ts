@@ -10,7 +10,13 @@ export interface ConnectedClient {
 export const createClient = async (): Promise<ConnectedClient> => {
     console.log("Creating client");
   try {
-    const transport = new SSEClientTransport(new URL("http://localhost:3006/sse"));
+    const token = process.env.RESOURCE_HUB_TOKEN;
+    if (!token) {
+      throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
+    }
+    const url = new URL("http://localhost:3006/sse");
+    url.searchParams.set('token', token);
+    const transport = new SSEClientTransport(url);
 
     const client = new Client({
       name: 'resource-hub-client',
@@ -22,7 +28,6 @@ export const createClient = async (): Promise<ConnectedClient> => {
         tools: {}
       }
     });
-    console.log("Client created");
     await client.connect(transport);
     console.log("Client connected");
 

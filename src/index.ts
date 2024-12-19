@@ -205,7 +205,6 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 
 async function main() {
   try {
-    console.log("Creating client in index.ts");
     connectedClient = await createClient();
     console.log(`Client "${connectedClient.name}" connected successfully`);
   } catch (error) {
