@@ -203,9 +203,34 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   }
 });
 
+async function authenticate(token: string) {
+  try {
+    const response = await fetch('http://localhost:3006/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+    
+    const data = await response.json();
+    console.log('Authentication response:', data);
+    return data.token;
+  } catch (error) {
+    console.error('Authentication failed:', error);
+    throw error;
+  }
+}
+
 async function main() {
   try {
-    connectedClient = await createClient();
+    const initialToken = process.env.RESOURCE_HUB_TOKEN;
+    if (!initialToken) {
+      throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
+    }
+    const authToken = await authenticate(initialToken);
+    
+    connectedClient = await createClient(authToken);
     console.log(`Client "${connectedClient.name}" connected successfully`);
   } catch (error) {
     console.error("Failed to create client:", error);

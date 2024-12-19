@@ -7,15 +7,11 @@ export interface ConnectedClient {
   name: string;
 }
 
-export const createClient = async (): Promise<ConnectedClient> => {
-    console.log("Creating client");
+export const createClient = async (authToken: string): Promise<ConnectedClient> => {
+    console.log("Creating client with auth token:", authToken);
   try {
-    const token = process.env.RESOURCE_HUB_TOKEN;
-    if (!token) {
-      throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
-    }
     const url = new URL("http://localhost:3006/sse");
-    url.searchParams.set('token', token);
+    url.searchParams.set('token', authToken);
     const transport = new SSEClientTransport(url);
 
     const client = new Client({
@@ -40,6 +36,6 @@ export const createClient = async (): Promise<ConnectedClient> => {
     };
   } catch (error) {
     console.error(`Failed to connect to server:`, error);
-    throw error; // Rethrow the error to handle it outside this function
+    throw error;
   }
 };
