@@ -224,10 +224,11 @@ async function authenticate(token: string) {
 
 async function main() {
   try {
-    const initialToken = process.env.RESOURCE_HUB_TOKEN;
-    if (!initialToken) {
-      throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
-    }
+    const initialToken = "123456";
+    // const initialToken = process.env.RESOURCE_HUB_TOKEN;
+    // if (!initialToken) {
+    //   throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
+    // }
     const authToken = await authenticate(initialToken);
     
     connectedClient = await createClient(authToken);
