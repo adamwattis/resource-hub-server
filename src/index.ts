@@ -213,8 +213,8 @@ async function authenticate(token: string) {
       body: JSON.stringify({ token }),
     });
     
-    const data = await response.json();
-    console.log('Authentication response:', data);
+    const rawText = await response.text();
+    const data = JSON.parse(rawText);
     return data.token;
   } catch (error) {
     console.error('Authentication failed:', error);
@@ -224,14 +224,10 @@ async function authenticate(token: string) {
 
 async function main() {
   try {
-    const initialToken = process.env.RESOURCE_HUB_TOKEN;
-    if (!initialToken) {
-      throw new Error("RESOURCE_HUB_TOKEN environment variable is required");
-    }
+    const initialToken = "123456"
     const authToken = await authenticate(initialToken);
     
     connectedClient = await createClient(authToken);
-    console.log(`Client "${connectedClient.name}" connected successfully`);
   } catch (error) {
     console.error("Failed to create client:", error);
     process.exit(1);

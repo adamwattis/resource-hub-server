@@ -8,7 +8,6 @@ export interface ConnectedClient {
 }
 
 export const createClient = async (authToken: string): Promise<ConnectedClient> => {
-    console.log("Creating client with auth token:", authToken);
   try {
     const url = new URL("http://localhost:3006/sse");
     url.searchParams.set('token', authToken);
@@ -25,7 +24,6 @@ export const createClient = async (authToken: string): Promise<ConnectedClient> 
       }
     });
     await client.connect(transport);
-    console.log("Client connected");
 
     return {
       client,
@@ -35,7 +33,7 @@ export const createClient = async (authToken: string): Promise<ConnectedClient> 
       }
     };
   } catch (error) {
-    console.error(`Failed to connect to server:`, error);
+    console.error('Failed to connect to server:', error);
     throw error;
   }
 };
