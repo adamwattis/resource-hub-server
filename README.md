@@ -1,48 +1,47 @@
-# resource-hub-server MCP Server
+# resource-hub-server
 
-An MCP server to connect to the resource hub
+An MCP server that connects to the Resource Hub - a central place to configure and manage your MCP servers.
 
-This is a TypeScript-based MCP server that implements a simple notes system. It demonstrates core MCP concepts by providing:
+## Overview
 
-- Resources representing text notes with URIs and metadata
-- Tools for creating new notes
-- Prompts for generating summaries of notes
+The resource-hub-server acts as a proxy between your local MCP environment and the Resource Hub. It allows you to:
 
-## Features
+- Access centrally configured tools and resources
+- Share configurations across different environments
+- Manage MCP server settings in one place
 
-### Resources
-- List and access notes via `note://` URIs
-- Each note has a title, content and metadata
-- Plain text mime type for simple content access
+## Usage
 
-### Tools
-- `create_note` - Create new text notes
-  - Takes title and content as required parameters
-  - Stores note in server state
+### Quick Start with npx
 
-### Prompts
-- `summarize_notes` - Generate a summary of all stored notes
-  - Includes all note contents as embedded resources
-  - Returns structured prompt for LLM summarization
+The easiest way to run the server is using npx:
 
-## Development
+```bash
+RESOURCE_HUB_TOKEN=your_token npx @adamwattis/resource-hub-server
+```
 
-Install dependencies:
+### Running from Source
+
+If you want to run from source:
+
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-Build the server:
+2. Build the server:
 ```bash
 npm run build
 ```
 
-For development with auto-rebuild:
+3. Run with your Resource Hub token:
 ```bash
-npm run watch
+RESOURCE_HUB_TOKEN=your_token npm start
 ```
 
-## Installation
+### Configuration
+
+You'll need a Resource Hub token to use this server. You can get this from the Resource Hub token page.
 
 To use with Claude Desktop, add the server config:
 
@@ -53,15 +52,19 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 {
   "mcpServers": {
     "resource-hub-server": {
-      "command": "/path/to/resource-hub-server/build/index.js"
+      "command": "npx @adamwattis/resource-hub-server"
     }
   }
 }
 ```
 
+### Environment Variables
+
+- `RESOURCE_HUB_TOKEN` (required): Your Resource Hub authentication token
+
 ### Debugging
 
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a package script:
+Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector):
 
 ```bash
 npm run inspector
