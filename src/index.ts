@@ -72,7 +72,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   try {
-    console.log('Forwarding tool call:', name);
+    // console.log('Forwarding tool call:', name);
     return await connectedClient.client.request(
       {
         method: 'tools/call',
@@ -129,7 +129,7 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
   const { name } = request.params;
 
   try {
-    console.log('Forwarding prompt request:', name);
+    // console.log('Forwarding prompt request:', name);
     const response = await connectedClient.client.request(
       {
         method: 'prompts/get',
