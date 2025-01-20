@@ -32,7 +32,7 @@ const server = new Server(
   },
   {
     capabilities: {
-      resources: { subscribe: true },
+      resources: { subscribe: false },
       tools: {},
       prompts: {},
     },
