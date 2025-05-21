@@ -205,7 +205,8 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 
 async function authenticate(token: string) {
   try {
-    const response = await fetch('http://localhost:3006/auth', {
+    const serverUrl = process.env.RESOURCE_HUB_URL || 'http://localhost:3006';
+    const response = await fetch(`${serverUrl}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -230,7 +231,8 @@ async function main() {
     }
     const authToken = await authenticate(initialToken);
     
-    connectedClient = await createClient(authToken);
+    const serverUrl = process.env.RESOURCE_HUB_URL || 'http://localhost:3006';
+    connectedClient = await createClient(authToken, serverUrl);
   } catch (error) {
     console.error("Failed to create client:", error);
     process.exit(1);
