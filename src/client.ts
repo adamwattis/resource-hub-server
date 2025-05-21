@@ -7,9 +7,9 @@ export interface ConnectedClient {
   name: string;
 }
 
-export const createClient = async (authToken: string): Promise<ConnectedClient> => {
+export const createClient = async (authToken: string, serverUrl: string = 'http://localhost:3006'): Promise<ConnectedClient> => {
   try {
-    const url = new URL("http://localhost:3006/sse");
+    const url = new URL(`${serverUrl}/sse`);
     url.searchParams.set('token', authToken);
     const transport = new SSEClientTransport(url);
 
